@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F728247F1EA1961300036857 /* Instrument.swift in Sources */ = {isa = PBXBuildFile; fileRef = F728247E1EA1961300036857 /* Instrument.swift */; };
 		F79CBF5F1E9CB0A3002ABF86 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79CBF5E1E9CB0A3002ABF86 /* AppDelegate.swift */; };
 		F79CBF611E9CB0A3002ABF86 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79CBF601E9CB0A3002ABF86 /* ViewController.swift */; };
 		F79CBF641E9CB0A3002ABF86 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F79CBF621E9CB0A3002ABF86 /* Main.storyboard */; };
@@ -34,7 +33,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		F728247E1EA1961300036857 /* Instrument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Instrument.swift; sourceTree = "<group>"; };
 		F79CBF5B1E9CB0A3002ABF86 /* AudioKit-Sampler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AudioKit-Sampler.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F79CBF5E1E9CB0A3002ABF86 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F79CBF601E9CB0A3002ABF86 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -80,7 +78,6 @@
 			children = (
 				F79CBF5E1E9CB0A3002ABF86 /* AppDelegate.swift */,
 				F79CBF601E9CB0A3002ABF86 /* ViewController.swift */,
-				F728247E1EA1961300036857 /* Instrument.swift */,
 				F79CBF701E9CB144002ABF86 /* Conductor.swift */,
 				F79CBF621E9CB0A3002ABF86 /* Main.storyboard */,
 				F79CBF721E9CB185002ABF86 /* Sounds */,
@@ -175,7 +172,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F728247F1EA1961300036857 /* Instrument.swift in Sources */,
 				F79CBF711E9CB144002ABF86 /* Conductor.swift in Sources */,
 				F79CBF611E9CB0A3002ABF86 /* ViewController.swift in Sources */,
 				F79CBF5F1E9CB0A3002ABF86 /* AppDelegate.swift in Sources */,
