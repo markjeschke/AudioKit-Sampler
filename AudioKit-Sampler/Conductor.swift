@@ -92,10 +92,19 @@ class Conductor: AKMIDIListener {
         print("Audio engine started")
         
         print("midi.inputNames: \(midi.inputNames)")
-        outputMIDIMessage = String(describing: midi.inputNames)
+        
+        outputMIDIMessage = ""
+        
+        let listInputNames = midi.inputNames
+        
+        for inputNames in listInputNames {
+            print("inputNames: \(inputNames)")
+            outputMIDIMessage += inputNames
+            captureMIDIText()
+        }
+        
         midi.openInput()
         midi.addListener(self)
-        
     }
     
     func captureMIDIText() {
@@ -119,8 +128,8 @@ class Conductor: AKMIDIListener {
     }
     
     func receivedMIDINoteOff(noteNumber: MIDINoteNumber, velocity: MIDIVelocity, channel: MIDIChannel) {
-        outputMIDIMessage = "Channel: \(channel + 1) noteOff: \(noteNumber) velocity: \(velocity)"
-        captureMIDIText()
+        //outputMIDIMessage = "Channel: \(channel + 1) noteOff: \(noteNumber) velocity: \(velocity)"
+        //captureMIDIText()
     }
     
     func receivedMIDIController(_ controller: MIDIByte, value: MIDIByte, channel: MIDIChannel) {
