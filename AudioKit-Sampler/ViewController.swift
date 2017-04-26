@@ -33,7 +33,9 @@ class ViewController: UIViewController {
                 print("No userInfo found in notification")
                 return
         }
-        outputText.text = message
+        DispatchQueue.main.async(execute: {
+            self.outputText.text = message
+        })
     }
     
     @IBAction func triggerKick() {
