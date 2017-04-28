@@ -22,31 +22,47 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2up-Lr-byu">
-                                <rect key="frame" x="130" y="265" width="116" height="30"/>
-                                <state key="normal" title="Toggle Oscillator"/>
-                                <connections>
-                                    <action selector="toggleOscillatorWithSender:" destination="0ud-Sz-xv0" eventType="touchDown" id="HoG-E3-Yci"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nhR-q0-KVv">
-                                <rect key="frame" x="130" y="318" width="116" height="30"/>
-                                <state key="normal" title="Kick"/>
-                                <connections>
-                                    <action selector="triggerKick" destination="0ud-Sz-xv0" eventType="touchDown" id="dGa-zo-7gx"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rNn-2E-6eW">
-                                <rect key="frame" x="130" y="371" width="116" height="30"/>
-                                <state key="normal" title="Snare"/>
-                                <connections>
-                                    <action selector="triggerSnare" destination="0ud-Sz-xv0" eventType="touchDown" id="iKS-UE-09P"/>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="MLE-fd-b9Y">
+                                <rect key="frame" x="20" y="89" width="339" height="528"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b6I-7s-d2g">
+                                        <rect key="frame" x="0.0" y="0.0" width="339" height="48"/>
+                                        <inset key="contentEdgeInsets" minX="0.0" minY="15" maxX="0.0" maxY="15"/>
+                                        <state key="normal" title="MIDI Learn"/>
+                                        <connections>
+                                            <action selector="toggleMidiLearn:" destination="0ud-Sz-xv0" eventType="touchUpInside" id="OXB-q5-WCZ"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2up-Lr-byu">
+                                        <rect key="frame" x="0.0" y="160" width="339" height="48"/>
+                                        <inset key="contentEdgeInsets" minX="0.0" minY="15" maxX="0.0" maxY="15"/>
+                                        <state key="normal" title="Toggle Oscillator"/>
+                                        <connections>
+                                            <action selector="toggleOscillatorWithSender:" destination="0ud-Sz-xv0" eventType="touchDown" id="HoG-E3-Yci"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nhR-q0-KVv">
+                                        <rect key="frame" x="0.0" y="320" width="339" height="48"/>
+                                        <inset key="contentEdgeInsets" minX="0.0" minY="15" maxX="0.0" maxY="15"/>
+                                        <state key="normal" title="Kick"/>
+                                        <connections>
+                                            <action selector="triggerKick" destination="0ud-Sz-xv0" eventType="touchDown" id="dGa-zo-7gx"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rNn-2E-6eW">
+                                        <rect key="frame" x="0.0" y="480" width="339" height="48"/>
+                                        <inset key="contentEdgeInsets" minX="0.0" minY="15" maxX="0.0" maxY="15"/>
+                                        <state key="normal" title="Snare"/>
+                                        <connections>
+                                            <action selector="triggerSnare" destination="0ud-Sz-xv0" eventType="touchDown" id="iKS-UE-09P"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qQY-FQ-QtY">
-                                <rect key="frame" x="16" y="39" width="343" height="28"/>
+                                <rect key="frame" x="16" y="20" width="343" height="29"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="28" id="PiL-yT-FWW"/>
+                                    <constraint firstAttribute="height" constant="29" id="vxH-Vj-qER"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -55,21 +71,20 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="qQY-FQ-QtY" firstAttribute="top" secondItem="l1k-ML-hEG" secondAttribute="bottom" constant="19" id="4Dh-SS-fCs"/>
-                            <constraint firstItem="nhR-q0-KVv" firstAttribute="trailing" secondItem="rNn-2E-6eW" secondAttribute="trailing" id="Fkd-RG-xPd"/>
-                            <constraint firstItem="qQY-FQ-QtY" firstAttribute="leading" secondItem="glB-ck-Yv7" secondAttribute="leadingMargin" id="UY4-e6-xUS"/>
-                            <constraint firstItem="nhR-q0-KVv" firstAttribute="centerY" secondItem="glB-ck-Yv7" secondAttribute="centerY" id="adC-rc-84A"/>
-                            <constraint firstItem="nhR-q0-KVv" firstAttribute="top" secondItem="2up-Lr-byu" secondAttribute="bottom" constant="23" id="daf-ay-okh"/>
-                            <constraint firstItem="2up-Lr-byu" firstAttribute="trailing" secondItem="nhR-q0-KVv" secondAttribute="trailing" id="mgg-zR-ZH3"/>
-                            <constraint firstItem="qQY-FQ-QtY" firstAttribute="centerX" secondItem="2up-Lr-byu" secondAttribute="centerX" id="pPS-Nq-mDA"/>
-                            <constraint firstItem="qQY-FQ-QtY" firstAttribute="trailing" secondItem="glB-ck-Yv7" secondAttribute="trailingMargin" id="phD-eN-XRp"/>
-                            <constraint firstItem="2up-Lr-byu" firstAttribute="leading" secondItem="nhR-q0-KVv" secondAttribute="leading" id="sFA-Ub-x2E"/>
-                            <constraint firstItem="rNn-2E-6eW" firstAttribute="top" secondItem="nhR-q0-KVv" secondAttribute="bottom" constant="23" id="tIz-dP-nke"/>
-                            <constraint firstItem="nhR-q0-KVv" firstAttribute="leading" secondItem="rNn-2E-6eW" secondAttribute="leading" id="wKG-ia-vH3"/>
+                            <constraint firstItem="MLE-fd-b9Y" firstAttribute="top" secondItem="qQY-FQ-QtY" secondAttribute="bottom" constant="40" id="EzB-f5-hCZ"/>
+                            <constraint firstItem="qQY-FQ-QtY" firstAttribute="trailing" secondItem="glB-ck-Yv7" secondAttribute="trailingMargin" id="OXF-lF-mAH"/>
+                            <constraint firstItem="qQY-FQ-QtY" firstAttribute="leading" secondItem="glB-ck-Yv7" secondAttribute="leadingMargin" id="k0Q-HN-uMk"/>
+                            <constraint firstItem="WpR-fM-sz9" firstAttribute="top" secondItem="MLE-fd-b9Y" secondAttribute="bottom" constant="50" id="ob5-44-opK"/>
+                            <constraint firstItem="qQY-FQ-QtY" firstAttribute="top" secondItem="l1k-ML-hEG" secondAttribute="bottom" id="odp-av-qbm"/>
+                            <constraint firstItem="MLE-fd-b9Y" firstAttribute="leading" secondItem="glB-ck-Yv7" secondAttribute="leading" constant="20" id="sDf-xj-Agg"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="MLE-fd-b9Y" secondAttribute="trailing" id="tYS-Jl-SfD"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="kickButton" destination="nhR-q0-KVv" id="b1K-qU-CCV"/>
+                        <outlet property="midiLearnButton" destination="b6I-7s-d2g" id="hs3-2Z-XJU"/>
                         <outlet property="outputText" destination="qQY-FQ-QtY" id="fXX-qJ-2vT"/>
+                        <outlet property="snareButton" destination="rNn-2E-6eW" id="q8Z-WV-rIB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rTM-x1-QFK" sceneMemberID="firstResponder"/>

@@ -22,7 +22,7 @@ class Conductor: AKMIDIListener {
     var reverb: AKReverb!
     var reverbMixer: AKDryWetMixer!
     var booster: AKBooster!
-    var globalMIDIChannel: UInt8
+    var globalMIDIChannel: UInt8 = 1
     var kickVolume: Double
     var kickPitch: MIDINoteNumber
     var kickPan: Double
@@ -30,9 +30,22 @@ class Conductor: AKMIDIListener {
     var snarePitch: MIDINoteNumber
     var snarePan: Double
     let midi = AKMIDI()
-    var outputMIDIMessage: String
+    var outputMIDIMessage: String = ""
+    var midiLearnEnabled: Bool = false
+    var kickNote: MIDINoteNumber = 36
+    var kickProgramChange: MIDIByte = 5
+    var snareNote: MIDINoteNumber = 38
+    var snareProgramChange: MIDIByte = 1
+    var currentProgramChangeNumber: MIDIByte = 1
+    var currentNoteNumber: MIDIByte = 36
+    var currentInstrument: String = ""
+    let userDefaults: UserDefaults
     
     init() {
+        
+        userDefaults = UserDefaults.standard
+        kickNote = MIDINoteNumber(userDefaults.integer(forKey: "kickNote"))
+        snareNote = MIDINoteNumber(userDefaults.integer(forKey: "snareNote"))
         
         do {
             try self.kickSampler.loadWav("Sounds/min_kick_02_C")
@@ -70,8 +83,6 @@ class Conductor: AKMIDIListener {
         booster = AKBooster(reverbMixer)
         booster.gain = 1.0
         
-        globalMIDIChannel = 1
-        
         kickPan = 0.0
         kickPitch = 60
         kickVolume = 1.0
@@ -92,8 +103,6 @@ class Conductor: AKMIDIListener {
         print("Audio engine started")
         
         print("midi.inputNames: \(midi.inputNames)")
-        
-        outputMIDIMessage = ""
         
         let listInputNames = midi.inputNames
         
@@ -117,11 +126,13 @@ class Conductor: AKMIDIListener {
     // MARK: - AKMIDIListener protocol functions
     
     func receivedMIDINoteOn(noteNumber: MIDINoteNumber, velocity: MIDIVelocity, channel: MIDIChannel) {
-        if noteNumber == 36 || noteNumber == 48 {
-            kickSampler.play(noteNumber: kickPitch, velocity: velocity, channel: channel)
+        currentNoteNumber = noteNumber
+        detectMidiLearn()
+        if noteNumber == kickNote {
+            kickSampler.play(noteNumber: kickPitch, velocity: velocity, channel: globalMIDIChannel)
         }
-        if noteNumber == 38 || noteNumber == 50 {
-            snareSampler.play(noteNumber: snarePitch, velocity: velocity, channel: channel)
+        if noteNumber == snareNote {
+            snareSampler.play(noteNumber: snarePitch, velocity: velocity, channel: globalMIDIChannel)
         }
         outputMIDIMessage = "Channel: \(channel + 1) noteOn: \(noteNumber) velocity: \(velocity)"
         captureMIDIText()
@@ -155,13 +166,15 @@ class Conductor: AKMIDIListener {
     }
     
     func receivedMIDIProgramChange(_ program: MIDIByte, channel: MIDIChannel) {
-        if program == 5 {
-            kickSampler.play(noteNumber: kickPitch, velocity: 80, channel: channel)
+        currentProgramChangeNumber = program
+        detectMidiLearn()
+        if program == kickProgramChange {
+            kickSampler.play(noteNumber: kickPitch, velocity: 127, channel: globalMIDIChannel)
         }
-        if program == 1 {
-            snareSampler.play(noteNumber: snarePitch, velocity: 80, channel: channel)
+        if program == snareProgramChange {
+            snareSampler.play(noteNumber: snarePitch, velocity: 127, channel: globalMIDIChannel)
         }
-        outputMIDIMessage = "Channel: \(channel + 1) programChange: \(program)"
+        outputMIDIMessage = "Note: \(currentNoteNumber) channel: \(channel + 1) programChange: \(program)"
         captureMIDIText()
     }
     
@@ -176,19 +189,52 @@ class Conductor: AKMIDIListener {
         }
     }
     
-    public func playKick() {
-        kickSampler.play(noteNumber:60,velocity:80,channel:1)
+    internal func toggleMidiLearn() {
+        if midiLearnEnabled {
+            midiLearnEnabled = false
+        } else {
+            midiLearnEnabled = true
+        }
+        outputMIDIMessage = "MIDI Learn: \(midiLearnEnabled ? true : false)"
+        captureMIDIText()
+    }
+    
+    internal func detectMidiLearn() {
+        if midiLearnEnabled {
+            if currentInstrument != "" {
+                setMidiEventUpdate()
+            }
+        }
+    }
+    
+    internal func setMidiEventUpdate() {
+        if currentInstrument == "kick" {
+            //kickProgramChange = currentProgramChangeNumber
+            //userDefaults.set(kickProgramChange, forKey: "kickProgramChange")
+            kickNote = currentNoteNumber
+            userDefaults.set(kickNote, forKey: "kickNote")
+        }
+        if currentInstrument == "snare" {
+            //snareProgramChange = currentProgramChangeNumber
+            //userDefaults.set(snareProgramChange, forKey: "snareProgramChange")
+            snareNote = currentNoteNumber
+            userDefaults.set(snareNote, forKey: "snareNote")
+        }
+    }
+    
+    internal func playKick() {
+        kickSampler.play(noteNumber:60,velocity:127,channel:1)
         outputMIDIMessage = "kick was triggered"
         captureMIDIText()
     }
     
-    public func playSnare() {
-        snareSampler.play(noteNumber:60,velocity:80,channel:1)
+    internal func playSnare() {
+        snareSampler.play(noteNumber:60,velocity:127,channel:1)
         outputMIDIMessage = "snare was triggered"
         captureMIDIText()
     }
     
-    public func playOscillator() {
+    internal func playOscillator() {
         if oscillator.isPlaying {
             oscillator.stop()
         } else {
@@ -199,4 +245,5 @@ class Conductor: AKMIDIListener {
         outputMIDIMessage = "oscillator was triggered"
         captureMIDIText()
     }
+    
 }
