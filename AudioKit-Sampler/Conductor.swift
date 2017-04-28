@@ -36,16 +36,20 @@ class Conductor: AKMIDIListener {
     var kickProgramChange: MIDIByte = 5
     var snareNote: MIDINoteNumber = 38
     var snareProgramChange: MIDIByte = 1
-    var currentProgramChangeNumber: MIDIByte = 1
-    var currentNoteNumber: MIDIByte = 36
+    var currentProgramChangeNumber: MIDIByte? = 1
+    var currentNoteNumber: MIDIByte? = 36
     var currentInstrument: String = ""
     let userDefaults: UserDefaults
     
     init() {
         
         userDefaults = UserDefaults.standard
+        
         kickNote = MIDINoteNumber(userDefaults.integer(forKey: "kickNote"))
+        kickProgramChange = MIDIByte(userDefaults.integer(forKey: "kickProgramChange"))
+        
         snareNote = MIDINoteNumber(userDefaults.integer(forKey: "snareNote"))
+        snareProgramChange = MIDIByte(userDefaults.integer(forKey: "snareProgramChange"))
         
         do {
             try self.kickSampler.loadWav("Sounds/min_kick_02_C")
@@ -118,9 +122,9 @@ class Conductor: AKMIDIListener {
     
     func captureMIDIText() {
         let nc = NotificationCenter.default
-        nc.post(name:NSNotification.Name(rawValue: "outputMessage"),
+        nc.post(name: NSNotification.Name(rawValue: "outputMessage"),
                 object: nil,
-                userInfo:["message":outputMIDIMessage])
+                userInfo: ["message": outputMIDIMessage])
     }
     
     // MARK: - AKMIDIListener protocol functions
@@ -174,7 +178,7 @@ class Conductor: AKMIDIListener {
         if program == snareProgramChange {
             snareSampler.play(noteNumber: snarePitch, velocity: 127, channel: globalMIDIChannel)
         }
-        outputMIDIMessage = "Note: \(currentNoteNumber) channel: \(channel + 1) programChange: \(program)"
+        outputMIDIMessage = "Channel: \(channel + 1) programChange: \(program)"
         captureMIDIText()
     }
     
@@ -209,16 +213,24 @@ class Conductor: AKMIDIListener {
     
     internal func setMidiEventUpdate() {
         if currentInstrument == "kick" {
-            //kickProgramChange = currentProgramChangeNumber
-            //userDefaults.set(kickProgramChange, forKey: "kickProgramChange")
-            kickNote = currentNoteNumber
-            userDefaults.set(kickNote, forKey: "kickNote")
+            if let programChangeNumber = currentProgramChangeNumber {
+                kickProgramChange = programChangeNumber
+                userDefaults.set(kickProgramChange, forKey: "kickProgramChange")
+            }
+            if let noteNumber = currentNoteNumber {
+                kickNote = noteNumber
+                userDefaults.set(kickNote, forKey: "kickNote")
+            }
         }
         if currentInstrument == "snare" {
-            //snareProgramChange = currentProgramChangeNumber
-            //userDefaults.set(snareProgramChange, forKey: "snareProgramChange")
-            snareNote = currentNoteNumber
-            userDefaults.set(snareNote, forKey: "snareNote")
+            if let programChangeNumber = currentProgramChangeNumber {
+                snareProgramChange = programChangeNumber
+                userDefaults.set(snareProgramChange, forKey: "snareProgramChange")
+            }
+            if let noteNumber = currentNoteNumber {
+                snareNote = noteNumber
+                userDefaults.set(snareNote, forKey: "snareNote")
+            }
         }
     }
     
